@@ -1,0 +1,20 @@
+<div *ngIf="recipe else recipeEmpty">
+<div class="row">
+  <div class="col-xs-12">
+    <img [src]="recipe.imagePath" alt="" class="img-responsive" />
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{ recipe.name }}</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    {{ recipe.value | currency }}
+  </div>
+</div>
+</div>
+		<ng-template #recipeEmpty>
+			<p>Please Select Analysis</p>
+		</ng-template>
