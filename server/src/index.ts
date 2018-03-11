@@ -4,6 +4,7 @@ import { apiRouter } from './api';
 import { appMiddleware, errorHandler } from './middleware';
 import logger from './util/logger';
 import { Sequelize } from "sequelize-typescript";
+import * as expressJwt from 'express-jwt';
 
 
 const sequelize = new Sequelize({
@@ -28,7 +29,7 @@ app.all('/api', (req, res, next) => {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 })
-app.use('/api', apiRouter);
+app.use('/api', expressJwt({ secret: 'secret'}).unless({path: ['/api/auth/login']}), apiRouter);
 
 app.use(errorHandler);
 

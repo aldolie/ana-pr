@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { Analysis } from '../../models/Analysis';
-import { data } from './analysis.model'
 
 
 export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
         Analysis.findAll().then(analyzes => {
             res.json({ contents: analyzes});
+        }).catch(error => {
+            res.sendStatus(400);
         });
     },
     getById: (req: Request, res: Response, next: NextFunction) => {
@@ -17,6 +18,8 @@ export let controller = {
           } else {
              res.json(analysis);
           }
+        }).catch(error => {
+            res.sendStatus(400);
         });
     },
     post: (req: Request, res: Response, next: NextFunction) => {
@@ -38,6 +41,8 @@ export let controller = {
             analysis.save();
             res.json(analysis);
           }
+        }).catch(error => {
+            res.sendStatus(400);
         });
     },
     delete: (req: Request, res: Response, next: NextFunction) => {
@@ -49,6 +54,8 @@ export let controller = {
             analysis.destroy();
             res.sendStatus(204);
           }
+        }).catch(error => {
+            res.sendStatus(400);
         });
     },
 };
