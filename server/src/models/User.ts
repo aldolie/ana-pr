@@ -1,4 +1,4 @@
-import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEmail, Scopes, DefaultScope, Unique } from "sequelize-typescript";
+import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEmail, Scopes, DefaultScope, Unique, NotNull } from "sequelize-typescript";
 
 
 @DefaultScope({
@@ -17,18 +17,22 @@ export class User extends Model<User> {
   @Column
   id: number;
 
+  @NotNull
   @Unique
   @IsEmail
   @Length({min: 1, max: 255, msg: 'wrong length'})
   @Column(DataType.TEXT)
   email: string;
 
+  @NotNull
   @Column(DataType.INTEGER)
   role: number;
 
+  @NotNull
   @Column(DataType.INTEGER)
   priviledge: number;
 
+  @NotNull
   @Length({min: 1, max: 255, msg: 'wrong length'})
   @Column
   password: string;
