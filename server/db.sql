@@ -2,7 +2,9 @@
 create table `user` (
 	id int(11) primary key auto_increment,
     email varchar(255) not null unique,
-    password varchar(255) not null
+    password varchar(255) not null,
+    role int not null,
+    priviledge int not null
 );
 
 create table `analysis` (

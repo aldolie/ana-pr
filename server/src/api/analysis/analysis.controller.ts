@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Analysis } from '../../models/Analysis';
 
-
 export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
         let limit = 10;
