@@ -14,5 +14,8 @@ export class Analysis extends Model<Analysis> {
 
   @Column
   value: number;
+  
+  @Column(DataType.INTEGER)
+  priviledge: number;
 
 }

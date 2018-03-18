@@ -1,15 +1,28 @@
 import { Request, Response, NextFunction } from 'express';
 import { Analysis } from '../../models/Analysis';
+import { Priviledges } from '../../util/Priviledge';
 
 export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
         let limit = 10;
         let offset = 0;
-        Analysis.findAndCountAll().then(data => {
+        let priviledges = Priviledges.getPrivildge(req.user.priviledge);
+        Analysis.findAndCountAll({
+          where: {
+            priviledge: {
+              $in: priviledges
+            }
+          }
+        }).then(data => {
            let page = req.query.page || 1;
            let pages = Math.ceil(data.count / limit);
            offset = limit * (page - 1);
            Analysis.findAll({
+              where: {
+                priviledge: {
+                  $in: priviledges
+                }
+              },
               limit: limit,
               offset: offset,
            }).then(analyzes => {
@@ -29,7 +42,13 @@ export let controller = {
     },
     getById: (req: Request, res: Response, next: NextFunction) => {
         let id = req.params.id;
-        Analysis.findById(id).then(analysis => {
+        let priviledges = Priviledges.getPrivildge(req.user.priviledge);
+        Analysis.findOne({
+          where: {
+            id: id,
+            priviledge: { $in: priviledges }
+          }
+        }).then(analysis => {
           if (analysis == null) {
              res.sendStatus(404);
           } else {
@@ -49,30 +68,42 @@ export let controller = {
     put: (req: Request, res: Response, next: NextFunction) => {
       let { name, value } = req.body;
       let id = req.params.id;
-        Analysis.findById(id).then(analysis => {
-          if (analysis == null) {
-             res.sendStatus(404);
-          } else {
-            analysis.name = name;
-            analysis.value = value;
-            analysis.save();
-            res.json(analysis);
+      let priviledges = Priviledges.getPrivildge(req.user.priviledge);
+      Analysis.findOne({
+          where: {
+            id: id,
+            priviledge: { $in: priviledges }
           }
-        }).catch(error => {
-            res.sendStatus(400);
-        });
+      }).then(analysis => {
+        if (analysis == null) {
+           res.sendStatus(404);
+        } else {
+          analysis.name = name;
+          analysis.value = value;
+          analysis.save();
+          res.json(analysis);
+        }
+      }).catch(error => {
+          res.sendStatus(400);
+      });
     },
     delete: (req: Request, res: Response, next: NextFunction) => {
       let id = req.params.id;
-        Analysis.findById(id).then(analysis => {
-          if (analysis == null) {
-             res.sendStatus(404);
-          } else {
-            analysis.destroy();
-            res.sendStatus(204);
+      let priviledges = Priviledges.getPrivildge(req.user.priviledge);
+      Analysis.findOne({
+          where: {
+            id: id,
+            priviledge: { $in: priviledges }
           }
-        }).catch(error => {
-            res.sendStatus(400);
-        });
+      }).then(analysis => {
+        if (analysis == null) {
+           res.sendStatus(404);
+        } else {
+          analysis.destroy();
+          res.sendStatus(204);
+        }
+      }).catch(error => {
+          res.sendStatus(400);
+      });
     },
 };
