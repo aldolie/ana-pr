@@ -42,7 +42,7 @@ export let controller = {
         });
     },
     post: (req: Request, res: Response, next: NextFunction) => {
-        let { email, password } = req.body;
+        let { email, password, priviledge, role } = req.body;
         User.create({email: email, password: Md5.hashStr(password)}).then(user => {
             res.status(201).json(user);
         }).catch(error => {
