@@ -43,4 +43,9 @@ export class User extends Model<User> {
   @Column({field: 'activation_token', type: DataType.STRING })
   activationToken: string;
 
+
+  @AllowNull(false)
+  @Column(DataType.BOOLEAN)
+  active: boolean;
+
 }

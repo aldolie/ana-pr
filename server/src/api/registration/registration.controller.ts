@@ -16,7 +16,7 @@ export let controller = {
           }
         }).then(user => {
           if (user == null) {
-            User.create({email: email, password: Md5.hashStr(password), priviledge: priviledge, role: role, activationToken: UUID()}).then(user => {
+            User.create({email: email, password: Md5.hashStr(password), priviledge: priviledge, role: role, active: true, activationToken: UUID()}).then(user => {
                 res.sendStatus(201);
             }).catch(error => {
                 console.log(error);
