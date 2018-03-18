@@ -5,10 +5,28 @@ import { Md5 } from 'ts-md5';
 
 export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
-        User.findAll().then(users => {
-            res.json({ contents: users});
+        let limit = 10;
+        let offset = 0;
+        User.findAndCountAll().then(data => {
+           let page = req.query.page || 1;
+           let pages = Math.ceil(data.count / limit);
+           offset = limit * (page - 1);
+           User.findAll({
+              limit: limit,
+              offset: offset,
+           }).then(users => {
+             res.json({
+               'result': users, 
+               'count': data.count,
+               'page': page,
+               'pages': pages
+             })
+           }).catch(error => {
+             res.sendStatus(400);
+           })
+
         }).catch(error => {
-            res.sendStatus(400);
+          res.sendStatus(400);
         });
     },
     getById: (req: Request, res: Response, next: NextFunction) => {

@@ -4,10 +4,28 @@ import { Analysis } from '../../models/Analysis';
 
 export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
-        Analysis.findAll().then(analyzes => {
-            res.json({ contents: analyzes});
+        let limit = 10;
+        let offset = 0;
+        Analysis.findAndCountAll().then(data => {
+           let page = req.query.page || 1;
+           let pages = Math.ceil(data.count / limit);
+           offset = limit * (page - 1);
+           Analysis.findAll({
+              limit: limit,
+              offset: offset,
+           }).then(analyzes => {
+             res.json({
+               'result': analyzes, 
+               'count': data.count,
+               'page': page,
+               'pages': pages
+             })
+           }).catch(error => {
+             res.sendStatus(400);
+           })
+
         }).catch(error => {
-            res.sendStatus(400);
+          res.sendStatus(400);
         });
     },
     getById: (req: Request, res: Response, next: NextFunction) => {
