@@ -5,7 +5,7 @@ class Role  {
 	static USER = 2;
 
 	isAdmin(role: number) {
-		return Role.USER === role;
+		return Role.ADMIN === role;
 	}
 
 }
