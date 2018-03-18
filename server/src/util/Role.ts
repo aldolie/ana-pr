@@ -1,11 +1,19 @@
 
 class Role  {
 
-	static ADMIN = 1;
-	static USER = 2;
+	public static ADMIN = 1;
+	public static USER = 2;
 
 	isAdmin(role: number) {
 		return Role.ADMIN === role;
+	}
+
+	getUserRole() {
+		return Role.USER;
+	}
+
+	getAdminRole() {
+		return Role.ADMIN;
 	}
 
 }

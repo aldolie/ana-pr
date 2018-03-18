@@ -1,4 +1,4 @@
-import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEmail, Scopes, DefaultScope, Unique, NotNull } from "sequelize-typescript";
+import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEmail, Scopes, DefaultScope, Unique, AllowNull } from "sequelize-typescript";
 
 
 @DefaultScope({
@@ -6,7 +6,7 @@ import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEma
 })
 @Scopes({
   full: {
-    attributes: [ 'id', 'email', 'password', 'role', 'priviledge' ]
+    attributes: [ 'id', 'email', 'password', 'role', 'priviledge', 'activationToken']
   }
 })
 @Table
@@ -17,24 +17,30 @@ export class User extends Model<User> {
   @Column
   id: number;
 
-  @NotNull
+  @AllowNull(false)
   @Unique
   @IsEmail
   @Length({min: 1, max: 255, msg: 'wrong length'})
   @Column(DataType.TEXT)
   email: string;
 
-  @NotNull
+
+  @AllowNull(false)
   @Column(DataType.INTEGER)
   role: number;
 
-  @NotNull
+  
+  @AllowNull(false)
   @Column(DataType.INTEGER)
   priviledge: number;
 
-  @NotNull
+  
+  @AllowNull(false)
   @Length({min: 1, max: 255, msg: 'wrong length'})
   @Column
   password: string;
+
+  @Column({field: 'activation_token', type: DataType.STRING })
+  activationToken: string;
 
 }

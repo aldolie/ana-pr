@@ -15,7 +15,7 @@ const sequelize = new Sequelize({
   password: 'root',
   modelPaths: [
     __dirname + '/models'
-  ]
+  ],
 });
 
 
@@ -29,7 +29,7 @@ app.all('/api', (req, res, next) => {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 })
-app.use('/api', expressJwt({ secret: 'secret'}).unless({path: ['/api/auth/login']}), apiRouter);
+app.use('/api', expressJwt({ secret: 'secret'}).unless({path: ['/api/auth/login', '/api/registration']}), apiRouter);
 
 app.use(errorHandler);
 

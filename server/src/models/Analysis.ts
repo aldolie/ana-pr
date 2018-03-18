@@ -1,4 +1,4 @@
-import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, NotNull } from "sequelize-typescript";
+import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, AllowNull } from "sequelize-typescript";
 
 @Table
 export class Analysis extends Model<Analysis> {
@@ -8,16 +8,17 @@ export class Analysis extends Model<Analysis> {
   @Column
   id: number;
 
-  @NotNull
+  @AllowNull(false)
   @Length({min: 1, max: 100, msg: 'wrong length'})
   @Column(DataType.TEXT)
   name: string;
 
-  @NotNull
+  @AllowNull(false)
   @Column
-  value: number;
-  
-  @NotNull
+  value: number; 
+ 
+ 
+  @AllowNull(false)
   @Column(DataType.INTEGER)
   priviledge: number;
 
