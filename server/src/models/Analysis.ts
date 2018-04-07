@@ -14,8 +14,8 @@ export class Analysis extends Model<Analysis> {
   name: string;
 
   @AllowNull(false)
-  @Column
-  value: number; 
+  @Column(DataType.TEXT)
+  value: string; 
  
  
   @AllowNull(false)
