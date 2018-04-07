@@ -1,0 +1,19 @@
+<div class="content-analyzes">
+	<mat-expansion-panel *ngFor="let a of analyzes">
+	  <mat-expansion-panel-header>
+	    <mat-panel-title class="content-name">
+	    	{{a.name}}
+	    </mat-panel-title>
+	    <mat-panel-description>
+	      This is a summary of the content
+	    </mat-panel-description>
+	  </mat-expansion-panel-header>
+
+	  <div [innerHTML]="a.value | safeHtml"></div>
+
+	  <mat-action-row *ngIf="isAdmin">
+	    <button mat-button color="primary" routerLink="/detail/{{a.id}}">Edit</button>
+	  </mat-action-row>
+
+	</mat-expansion-panel>
+</div>

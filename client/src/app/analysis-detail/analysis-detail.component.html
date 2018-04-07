@@ -1,0 +1,13 @@
+<div class="content-analysis">
+	<mat-card *ngIf="analysis;else not_found">
+    <mat-card-content>
+        <p>Edit Analysis</p>
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Name" [(ngModel)]="name" required>
+        </mat-input-container>
+        <app-ngx-editor [config]="config" [(ngModel)]="value"></app-ngx-editor>
+        <button mat-raised-button color="primary" type="submit" (click)="submit()">Save</button>
+    </mat-card-content>
+  </mat-card>
+  <ng-template #not_found>Not Found</ng-template>
+</div>

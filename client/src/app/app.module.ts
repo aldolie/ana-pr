@@ -1,44 +1,71 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule, Routes } from '@angular/router';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+import { JwtInterceptor } from './jwt.interceptor';
+import { MaterialModule } from './material/material.module';
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { NgxEditorModule } from 'ngx-editor';
+
 
 import { AppComponent } from './app.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
-import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
-import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
-import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { RecipeService } from './recipes/recipe.service';
+import { AnalyzesComponent } from './analyzes/analyzes.component';
+import { AnalysisDetailComponent } from './analysis-detail/analysis-detail.component';
 
-const routes: Routes = [
-  { path: '', redirectTo: '/analyzes', pathMatch: 'full' },
-  { path: 'analyzes', component: RecipesComponent, children: [
-    {path: '', component: RecipeDetailComponent},
-    {path: 'new', component: RecipeEditComponent},
-    {path: ':id', component: RecipeDetailComponent},
-    {path: ':id/edit', component: RecipeEditComponent}
-  ]}
-];
+import { AnalysisService } from './analysis.service';
+import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth-guard.service';
+import { AppRoutingModule } from './/app-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SafeHtml } from './safe-html.pipe';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
-    RecipeEditComponent
+    AnalyzesComponent,
+    AnalysisDetailComponent,
+    DashboardComponent,
+    NavigationComponent,
+    LoginComponent,
+    ProfileComponent,
+    SafeHtml,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
-    RouterModule.forRoot(routes)
+    FlexLayoutModule,
+    MaterialModule,
+    AngularFontAwesomeModule,
+    NgxEditorModule,
+    AppRoutingModule
   ],
-  providers: [RecipeService],
+  providers: [
+    AnalysisService,
+    AuthService,
+    AuthGuardService,
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AuthInterceptor, 
+      multi: true 
+    },
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: JwtInterceptor, 
+      multi: true 
+    },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
