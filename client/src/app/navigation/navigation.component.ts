@@ -9,16 +9,13 @@ import { AuthService } from '../auth.service';
 export class NavigationComponent implements OnInit {
 
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private authService: AuthService) { 
       this.isLoggedIn = authService.isLoggedIn();
+      this.isAdmin = authService.isAdmin();
       this.authService.getSession.subscribe(session => {
-          if (session == null) {
-              this.isLoggedIn = false
-          } else {
-              this.isLoggedIn = true;
-          }
-
+          this.fetchSessionState();
       });
   }
 
@@ -27,6 +24,11 @@ export class NavigationComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  fetchSessionState() {
+      this.isLoggedIn = this.authService.isLoggedIn();
+      this.isAdmin = this.authService.isAdmin();
   }
 
 }

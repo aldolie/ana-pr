@@ -17,14 +17,18 @@ import { AnalyzesComponent } from './analyzes/analyzes.component';
 import { AnalysisDetailComponent } from './analysis-detail/analysis-detail.component';
 
 import { AnalysisService } from './analysis.service';
+import { UserService } from './user.service';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
+import { RoleGuardService } from './role-guard.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SafeHtml } from './safe-html.pipe';
+import { UsersComponent } from './users/users.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 
 @NgModule({
@@ -37,6 +41,8 @@ import { SafeHtml } from './safe-html.pipe';
     LoginComponent,
     ProfileComponent,
     SafeHtml,
+    UsersComponent,
+    UserDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +58,10 @@ import { SafeHtml } from './safe-html.pipe';
   ],
   providers: [
     AnalysisService,
+    UserService,
     AuthService,
     AuthGuardService,
+    RoleGuardService,
     { 
       provide: HTTP_INTERCEPTORS, 
       useClass: AuthInterceptor, 
