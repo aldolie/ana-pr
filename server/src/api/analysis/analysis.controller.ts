@@ -80,8 +80,11 @@ export let controller = {
         } else {
           analysis.name = name;
           analysis.value = value;
-          analysis.save();
-          res.json(analysis);
+          analysis.save().then(savedAnalysis => {
+            res.json(analysis);
+          }).catch(error => {
+            res.sendStatus(400);
+          });
         }
       }).catch(error => {
           res.sendStatus(400);

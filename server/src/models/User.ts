@@ -6,7 +6,7 @@ import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEma
 })
 @Scopes({
   full: {
-    attributes: [ 'id', 'email', 'password', 'role', 'priviledge', 'activationToken']
+    attributes: [ 'id', 'email', 'password', 'role', 'priviledge', 'activationToken', 'active', 'name', 'dateOfBirth', 'country', 'region', 'postalCode', 'phoneNumber']
   }
 })
 @Table
@@ -47,5 +47,31 @@ export class User extends Model<User> {
   @AllowNull(false)
   @Column(DataType.BOOLEAN)
   active: boolean;
+
+  @AllowNull(true)
+  @Column(DataType.TEXT)
+  name: string;
+
+  @AllowNull(true)
+  @Column({field: 'date_of_birth', type: DataType.DATEONLY})
+  dateOfBirth: Date;
+
+  @AllowNull(true)
+  @Column(DataType.TEXT)
+  country: string;
+
+
+  @AllowNull(true)
+  @Column(DataType.TEXT)
+  region: string;
+
+
+  @AllowNull(true)
+  @Column({field: 'postal_code', type: DataType.TEXT})
+  postalCode: string;
+
+  @AllowNull(true)
+  @Column({field: 'phone_number', type: DataType.TEXT})
+  phoneNumber: string;
 
 }
