@@ -37,4 +37,12 @@ export class AnalysisService {
      });
   }
 
+  createAnalysis(analysis: Analysis): Observable<Analysis> {
+    return this.http.post(this.url, analysis).map(data => {
+         return data;
+     }).catch((error: Response) => {
+         return Observable.throw(error);
+     });
+  }
+
 }

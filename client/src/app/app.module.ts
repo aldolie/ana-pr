@@ -29,6 +29,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SafeHtml } from './safe-html.pipe';
 import { UsersComponent } from './users/users.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { AnalysisAddComponent } from './analysis-add/analysis-add.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     SafeHtml,
     UsersComponent,
     UserDetailComponent,
+    AnalysisAddComponent,
   ],
   imports: [
     BrowserModule,

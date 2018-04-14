@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnalyzesComponent } from './analyzes/analyzes.component';
 import { AnalysisDetailComponent } from './analysis-detail/analysis-detail.component';
+import { AnalysisAddComponent } from './analysis-add/analysis-add.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -12,6 +13,7 @@ import { RoleGuardService as RoleGuard } from './role-guard.service';
 
 const routes: Routes = [
   { path: 'analyzes', component: AnalyzesComponent, canActivate: [AuthGuard] },
+  { path: 'analyzes/add', component: AnalysisAddComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'analyzes/detail/:id', component: AnalysisDetailComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

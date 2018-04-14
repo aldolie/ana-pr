@@ -1,4 +1,10 @@
 <div class="content-analyzes">
+	<button *ngIf="isAdmin" mat-button color="primary" routerLink="/analyzes/add">
+		<mat-icon>add</mat-icon>
+		<span>Add Analysis</span>
+	</button>
+	<br/>
+	<br/>
 	<mat-expansion-panel *ngFor="let a of analyzes">
 	  <mat-expansion-panel-header>
 	    <mat-panel-title class="content-name">
