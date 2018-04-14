@@ -66,7 +66,7 @@ export let controller = {
 
     },
     put: (req: Request, res: Response, next: NextFunction) => {
-      let { name, value } = req.body;
+      let { name, value, priviledge } = req.body;
       let id = req.params.id;
       let priviledges = Priviledges.getPrivildge(req.user.priviledge);
       Analysis.findOne({
@@ -80,6 +80,7 @@ export let controller = {
         } else {
           analysis.name = name;
           analysis.value = value;
+          analysis.priviledge = priviledge;
           analysis.save().then(savedAnalysis => {
             res.json(analysis);
           }).catch(error => {
