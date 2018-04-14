@@ -59,8 +59,8 @@ export let controller = {
         });
     },
     post: (req: Request, res: Response, next: NextFunction) => {
-        let { name, value } = req.body;
-        Analysis.create({name: name, value: value}).then(analysis => {
+        let { name, value, priviledge } = req.body;
+        Analysis.create({name: name, priviledge: priviledge, value: value}).then(analysis => {
             res.status(201).json(analysis);
         });
 
