@@ -15,6 +15,7 @@ export class AnalysisDetailComponent implements OnInit {
   private id: number;
   private name: string = '';
   private value: string = '';
+  private priviledge: number;
 
   config = {
     "editable": true,
@@ -47,13 +48,15 @@ export class AnalysisDetailComponent implements OnInit {
   submit() {
     this.analysisService.updateAnalysis(this.id, {
         id: this.id,
-        priviledge: this.analysis.priviledge,
+        priviledge: this.priviledge,
         name: this.name,
         value: this.value
     }).subscribe(analysis => {
+      console.log(analysis);
       this.analysis = analysis;
       this.name = analysis.name;
       this.value = analysis.value;
+      this.priviledge = analysis.priviledge;
     }, error => {
       console.log(error);
     })          
@@ -67,6 +70,8 @@ export class AnalysisDetailComponent implements OnInit {
         this.analysis = analysis;
         this.name = analysis.name;
         this.value = analysis.value;
+        this.priviledge = analysis.priviledge;
+        console.log(this.priviledge);
       }, error => {
         console.log(error);
       });

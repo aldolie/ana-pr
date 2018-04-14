@@ -5,7 +5,21 @@
         <mat-input-container class="full-width-input">
           <input matInput placeholder="Name" [(ngModel)]="name" required>
         </mat-input-container>
+        <div>
+          <mat-select placeholder="Priviledge" [(ngModel)]="priviledge" >
+            <mat-option [value]="1">
+              Basic
+            </mat-option>
+            <mat-option [value]="2">
+              Pro
+            </mat-option>
+          </mat-select>
+        </div>
+        <br/>
+        <br/>
         <app-ngx-editor [config]="config" [(ngModel)]="value"></app-ngx-editor>
+        <br/>
+        
         <button mat-raised-button color="primary" type="submit" (click)="submit()">Save</button>
     </mat-card-content>
   </mat-card>
