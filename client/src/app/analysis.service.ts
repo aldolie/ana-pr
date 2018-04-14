@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -13,9 +13,12 @@ export class AnalysisService {
 
   constructor(private http: HttpClient) { }
 
-  getAnalyzes(): Observable<Analysis[]> {
-    return this.http.get(this.url).map((data: any) => {
-      return data.result;
+  getAnalyzes(page: number): Observable<Analysis[]> {
+
+    let params = new HttpParams().set('page', String(page));
+    return this.http.get(this.url, {params: params}).map((data: any) => {
+
+      return data;
     }).catch((error: Response) => {
       return Observable.throw(error);
     });

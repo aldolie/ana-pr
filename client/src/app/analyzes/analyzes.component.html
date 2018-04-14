@@ -22,4 +22,8 @@
 	  </mat-action-row>
 
 	</mat-expansion-panel>
+	<mat-paginator [length]="size"
+              [pageSize]="10"
+                (page)="pageEvent = getData($event)">
+	</mat-paginator>
 </div>

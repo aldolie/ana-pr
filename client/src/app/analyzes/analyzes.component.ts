@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Analysis } from '../models/analysis';
 import { AnalysisService } from '../analysis.service';
 import { AuthService } from '../auth.service';
+import { PageEvent } from '@angular/material';
 
 
 @Component({
@@ -11,7 +12,12 @@ import { AuthService } from '../auth.service';
 })
 export class AnalyzesComponent implements OnInit {
 
-  selectedAnalysis: Analysis;
+  page: number = 0;
+  size: number = 0;
+
+
+  pageEvent: PageEvent;
+
 
   analyzes: Analysis[];
 
@@ -29,12 +35,18 @@ export class AnalyzesComponent implements OnInit {
     this.getAnalyzes();
   }
 
-  onSelect(analysis: Analysis): void {
-    this.selectedAnalysis = analysis;
+
+  getData($event): void {
+     this.page = $event.pageIndex;
+     this.getAnalyzes();
   }
 
   getAnalyzes(): void {
-    this.analysisService.getAnalyzes().subscribe(analyzes => this.analyzes = analyzes);
+    this.analysisService.getAnalyzes(this.page + 1).subscribe( (data:any) => {
+      this.analyzes = data.result;
+      this.page = data.page - 1;
+      this.size = data.count;
+    });
   }
 
 }
