@@ -7,6 +7,7 @@ import { Sequelize } from "sequelize-typescript";
 import * as expressJwt from 'express-jwt';
 
 
+
 const sequelize = new Sequelize({
   name: 'ana-pr',
   dialect: 'mysql',

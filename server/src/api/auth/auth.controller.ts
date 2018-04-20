@@ -31,6 +31,7 @@ export let controller = {
                  res.sendStatus(400);
              }
         }).catch(error => {
+             console.log(error);
              res.sendStatus(400);
         })
 
