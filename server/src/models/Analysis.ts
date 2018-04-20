@@ -1,6 +1,8 @@
 import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, AllowNull } from "sequelize-typescript";
 
-@Table
+@Table({
+  tableName: 'analysis'
+})
 export class Analysis extends Model<Analysis> {
 
   @PrimaryKey
