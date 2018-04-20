@@ -9,7 +9,9 @@ import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEma
     attributes: [ 'id', 'email', 'password', 'role', 'priviledge', 'activationToken', 'active', 'name', 'dateOfBirth', 'country', 'region', 'postalCode', 'phoneNumber']
   }
 })
-@Table
+@Table({
+  tableName: 'user'
+})
 export class User extends Model<User> {
 
   @PrimaryKey
