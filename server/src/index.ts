@@ -25,16 +25,16 @@ app.use(appMiddleware(app));
 app.use(bodyParser.urlencoded({'extended':true})); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-app.all('/api', (req, res, next) => {
+app.all('/', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 })
-app.use('/api', expressJwt({ secret: 'secret'}).unless({path: 
+app.use('/', expressJwt({ secret: 'secret'}).unless({path: 
   [  
-    '/api/auth/login',
-    '/api/registration',
-    '/api/verification',
+    '/auth/login',
+    '/registration',
+    '/verification',
   ]
 }), apiRouter);
 
