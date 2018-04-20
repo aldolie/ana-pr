@@ -5,11 +5,12 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Analysis } from './models/analysis';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AnalysisService {
 
-  url: string = "http://localhost:3000/api/analyzes"
+  url: string = environment.apiUrl + "/analyzes";
 
   constructor(private http: HttpClient) { }
 
