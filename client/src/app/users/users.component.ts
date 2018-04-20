@@ -33,9 +33,10 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 
-  getData($event): void {
+  getData($event): any {
      this.page = $event.pageIndex;
      this.getUsers();
+     return $event;
   }
 
   getUsers(): void {
