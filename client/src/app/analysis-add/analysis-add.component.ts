@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 })
 export class AnalysisAddComponent implements OnInit {
 
-  private name: string = '';
-  private value: string = '';
-  private priviledge: number;
+  name: string = '';
+  value: string = '';
+  priviledge: number;
 
   config = {
     "editable": true,

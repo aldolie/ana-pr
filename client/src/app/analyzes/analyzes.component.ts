@@ -36,9 +36,10 @@ export class AnalyzesComponent implements OnInit {
   }
 
 
-  getData($event): void {
+  getData($event): any {
      this.page = $event.pageIndex;
      this.getAnalyzes();
+     return $event;
   }
 
   getAnalyzes(): void {
