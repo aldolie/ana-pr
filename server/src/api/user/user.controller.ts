@@ -82,7 +82,7 @@ export let controller = {
                     res.json(savedUser);
                 }).catch(error => {
                     res.sendStatus(400);
-                })
+                });
             }
         }).catch(error => {
             res.sendStatus(400);
