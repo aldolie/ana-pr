@@ -4,9 +4,9 @@ export class User {
   role: number;
   priviledge: number;
   active: boolean;
-  name: string,
-  dateOfBirth: string,
-  country: string,
+  name: string;
+  dateOfBirth: string;
+  country: string;
   region: string;
   postalCode: string;
   phoneNumber: string;
