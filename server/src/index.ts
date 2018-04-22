@@ -26,6 +26,7 @@ app.use('/api', expressJwt({ secret: 'secret'}).unless({path:
 
 app.use(errorHandler);
 
+
 export default app;
 export let __sequelize = new Sequelize({
     name: 'ana-pr',
