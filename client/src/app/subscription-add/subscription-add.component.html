@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-content>
+    <p>New Subscription</p>
+    <mat-form-field>
+      <mat-select [(value)]="priviledge" placeholder="Priviledge">
+        <mat-option *ngFor="let priviledge of priviledges" [value]="priviledge.value">{{ priviledge.text }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Bank Name" [(ngModel)]="bankName" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Account Name" [(ngModel)]="accountName" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Account Number" [(ngModel)]="accountNumber" required>
+    </mat-form-field>
+    <div>
+      <input class="ng-hide" id="input-file-id" multiple type="file" />
+      <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <button mat-raised-button color="primary">
+      Submit
+    </button>
+  </mat-card-footer>
+</mat-card>
