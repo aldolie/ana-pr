@@ -34,6 +34,7 @@ import {SubscriptionComponent} from './subscription/subscription.component';
 import {SubscriptionAddComponent} from './subscription-add/subscription-add.component';
 import {SubscriptionManageComponent} from './subscription-manage/subscription-manage.component';
 import {SubscriptionService} from "./subscription.service";
+import {SocketService} from "./socket.service";
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import {SubscriptionService} from "./subscription.service";
         AuthGuardService,
         RoleGuardService,
         SubscriptionService,
+        SocketService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

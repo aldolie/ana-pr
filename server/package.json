@@ -26,6 +26,7 @@
     "@types/nodemailer": "^4.6.0",
     "@types/nodemailer-direct-transport": "^1.0.31",
     "@types/nodemailer-smtp-transport": "^2.7.4",
+    "@types/socket.io": "^1.4.33",
     "@types/uuid": "^3.4.3",
     "body-parser": "^1.17.2",
     "colors": "^1.1.2",
@@ -37,6 +38,7 @@
     "reflect-metadata": "^0.1.12",
     "sequelize": "~4.35.1",
     "sequelize-typescript": "~0.6.2",
+    "socket.io": "^2.1.0",
     "ts-md5": "~1.2.4",
     "uuid": "^3.2.1"
   }
