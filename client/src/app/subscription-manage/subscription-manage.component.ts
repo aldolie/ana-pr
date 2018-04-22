@@ -59,6 +59,7 @@ export class SubscriptionManageComponent implements OnInit {
     getData($event): void {
         this.page = $event.pageIndex;
         this.getSubscriptions();
+        return $event;
     }
 
     getSubscriptions() {

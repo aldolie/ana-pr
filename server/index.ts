@@ -12,14 +12,11 @@ server.listen(config.port, () => {
 });
 
 io.on('connect', (socket: any) => {
-    console.log('Client connected ' + socket.id);
     socket.on('room', (data: any) => {
         if (data.priviledge >= 1) {
-            console.log('join trade room');
             socket.join('trade');
         }
         if (data.priviledge >= 3) {
-            console.log('join trade analysis');
             socket.join('analysis');
         }
     });
