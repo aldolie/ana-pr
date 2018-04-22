@@ -5,13 +5,14 @@ import {Router} from '@angular/router';
 import * as moment from "moment";
 import {Session} from './models/session';
 import * as jwt_decode from 'jwt-decode';
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class AuthService {
 
     @Output() getSession: EventEmitter<any> = new EventEmitter();
 
-    url: string = "http://localhost:3000/api/auth/login";
+    url: string = environment.apiUrl + "auth/login";
 
     session: Session;
 
