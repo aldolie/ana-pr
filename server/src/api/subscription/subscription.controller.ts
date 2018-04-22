@@ -16,7 +16,13 @@ function querySubscription(req: Request, res: Response, condition: any = {}, lim
             limit: pages.limit,
             offset: pages.offset
         };
-        condition = { ...condition, ...limitCondition};
+        let others = {
+            include: [User],
+            order: [
+                ['status', 'ASC']
+            ]
+        };
+        condition = { ...condition, ...limitCondition, ...others };
         Subscription.findAll(condition).then(subscriptions => {
             res.json({
                 'result': subscriptions,
@@ -34,14 +40,7 @@ function querySubscription(req: Request, res: Response, condition: any = {}, lim
 
 export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
-        let condition = {
-            where: {
-                status: {
-                    $ne: SubscriptionStatuses.getCancelledStatus()
-                }
-            }
-        };
-        querySubscription(req, res, condition);
+        querySubscription(req, res);
     },
     getByStatus: (req: Request, res: Response, next: NextFunction) => {
         let status = req.params.status || -1;

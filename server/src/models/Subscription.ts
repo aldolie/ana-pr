@@ -1,4 +1,8 @@
-import {Table, Model, PrimaryKey, Column, AutoIncrement, DataType, DefaultScope, AllowNull} from "sequelize-typescript";
+import {
+    Table, Model, PrimaryKey, Column, AutoIncrement, DataType, DefaultScope, Scopes, AllowNull,
+    ForeignKey, BelongsTo
+} from "sequelize-typescript";
+import {User} from "./User";
 
 @DefaultScope({
     attributes: ['id', 'userId', 'bankName', 'accountName', 'accountNumber', 'paymentProof', 'priviledge', 'status', 'respondedAt']
@@ -12,8 +16,12 @@ export class Subscription extends Model<Subscription> {
     id: number;
 
     @AllowNull(false)
+    @ForeignKey(() => User)
     @Column({field: 'user_id', type: DataType.INTEGER})
     userId: number;
+
+    @BelongsTo(() => User)
+    user: User;
 
     @AllowNull(false)
     @Column({field: 'bank_name', type: DataType.STRING})
