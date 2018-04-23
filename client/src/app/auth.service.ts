@@ -12,7 +12,7 @@ export class AuthService {
 
   @Output() getSession: EventEmitter<any> = new EventEmitter();
 
-  url: string = environment.apiUrl + "auth/login";
+  url: string = environment.apiUrl + "/auth/login";
 
   session: Session;
 
