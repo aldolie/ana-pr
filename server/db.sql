@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2018 at 08:21 PM
+-- Generation Time: Apr 23, 2018 at 08:59 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.1.14
 
@@ -60,27 +60,6 @@ CREATE TABLE `subscription` (
   `status` int(11) NOT NULL,
   `responded_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `subscription`
---
-
-INSERT INTO `subscription` (`id`, `user_id`, `bank_name`, `account_name`, `account_number`, `payment_proof`, `priviledge`, `status`, `responded_at`) VALUES
-(1, 1, 'BCA', 'Andi', '123123', '', 3, 3, '2018-04-22 12:19:57'),
-(2, 2, 'BCA', 'Budi', '123456', '', 1, 2, '2018-04-22 12:20:06'),
-(3, 3, 'BCA', 'Kiki', '234123', '', 3, 3, '2018-04-22 12:19:57'),
-(4, 1, 'BCA', 'Caca', '232312', '', 3, 2, '2018-04-22 12:19:57'),
-(5, 1, 'BCA', 'Andi', '123123', '', 1, 3, '2018-04-22 13:51:56'),
-(6, 1, 'BCA', 'Andi', '123123', '', 1, 2, '2018-04-22 12:20:06'),
-(7, 2, 'BCA', 'Budi', '234234', '', 1, 3, '2018-04-22 12:20:06'),
-(8, 2, 'BCA', 'Bakri', '345345', '', 1, 4, '2018-04-22 12:20:06'),
-(9, 1, 'BCA', 'Andi', '123123', '', 3, 3, '2018-04-22 12:19:57'),
-(10, 1, 'BCA', 'Andi', '123123', '', 1, 4, '2018-04-22 12:20:06'),
-(11, 2, 'BCA', 'Budi', '234234', '', 1, 4, '2018-04-22 12:20:06'),
-(12, 2, 'BCA', 'Bakri', '345345', '', 3, 2, '2018-04-22 12:19:57'),
-(13, 1, 'CIMB', 'Andi', '123123', '', 3, 4, '2018-04-22 13:52:00'),
-(14, 1, 'CIMB', 'Budi', '234234', '', 1, 1, '2018-04-22 12:20:06'),
-(15, 3, 'BCA', 'AAA', '123123', '', 3, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -145,13 +124,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `analysis`
 --
 ALTER TABLE `analysis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `subscription`
 --
 ALTER TABLE `subscription`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`

@@ -1,12 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { Subscription } from '../../models/Subscription';
 import { SubscriptionStatuses } from '../../util/SubscriptionStatus';
-import { Md5 } from 'ts-md5';
-import  *  as UUID from 'uuid';
 import paging from "../../util/paging";
 import {User} from "../../models/User";
 import {Priviledges} from "../../util/Priviledge";
-import {__sequelize} from "../../index";
+import {__sequelize, upload} from "../../index";
 import {Transaction} from "sequelize";
 
 function querySubscription(req: Request, res: Response, condition: any = {}, limit: number = 10, offset: number = 0) {
@@ -68,19 +66,27 @@ export let controller = {
         querySubscription(req, res, condition);
     },
     post: (req: Request, res: Response, next: NextFunction) => {
-        let { bankName, accountName, accountNumber, paymentProof, priviledge } = req.body;
-        Subscription.create({
-            userId: req.user.id,
-            bankName: bankName,
-            accountName: accountName,
-            accountNumber: accountNumber,
-            paymentProof: paymentProof,
-            priviledge: priviledge,
-            status: SubscriptionStatuses.getAppliedStatus()
-        }).then(subscription => {
-            res.status(201).json(subscription);
-        }).catch(error => {
-            res.sendStatus(400);
+        console.log('receive create subs');
+        let fileUpload = upload.single('image');
+        fileUpload(req, res, (err) => {
+            let { bankName, accountName, accountNumber, priviledge } = req.body;
+            if (!req.file) {
+                res.sendStatus(400);
+            } else {
+                Subscription.create({
+                    userId: req.user.id,
+                    bankName: bankName,
+                    accountName: accountName,
+                    accountNumber: accountNumber,
+                    paymentProof: req.file.filename,
+                    priviledge: priviledge,
+                    status: SubscriptionStatuses.getAppliedStatus()
+                }).then(subscription => {
+                    res.status(201).json(subscription);
+                }).catch(error => {
+                    res.sendStatus(400);
+                });
+            }
         });
     },
     cancel: (req: Request, res: Response, next: NextFunction) => {

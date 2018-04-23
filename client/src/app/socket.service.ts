@@ -4,15 +4,15 @@ import { Observer } from 'rxjs/Observer';
 
 import * as socketIo from 'socket.io-client';
 import {Analysis} from "./models/analysis";
+import {environment} from "../environments/environment";
 
-const SERVER_URL = 'http://localhost:3000';
 
 @Injectable()
 export class SocketService {
   private socket;
 
   public initSocket(priviledge: number): void {
-    this.socket = socketIo(SERVER_URL);
+    this.socket = socketIo(environment.serverUrl);
     this.socket.on('connect', conn => {
       this.socket.emit('room', { priviledge: priviledge });
     });

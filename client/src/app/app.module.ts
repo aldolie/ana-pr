@@ -32,7 +32,6 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
 import {AnalysisAddComponent} from './analysis-add/analysis-add.component';
 import {SubscriptionComponent} from './subscription/subscription.component';
 import {SubscriptionAddComponent} from './subscription-add/subscription-add.component';
-import {SubscriptionManageComponent} from './subscription-manage/subscription-manage.component';
 import {SubscriptionService} from "./subscription.service";
 import {SocketService} from "./socket.service";
 
@@ -52,7 +51,6 @@ import {SocketService} from "./socket.service";
         AnalysisAddComponent,
         SubscriptionComponent,
         SubscriptionAddComponent,
-        SubscriptionManageComponent,
     ],
     imports: [
         BrowserModule,

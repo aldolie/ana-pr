@@ -53,8 +53,8 @@ export class SubscriptionService {
     });
   }
 
-  createSubscription(subscription: Subscription): Observable<Subscription> {
-    return this.http.post(this.url, subscription).map(data => {
+  createSubscription(formData: any): Observable<Subscription> {
+    return this.http.post(this.url, formData).map(data => {
       return data;
     }).catch((error: Response) => {
       return Observable.throw(error);

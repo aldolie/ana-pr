@@ -20,4 +20,5 @@ router.route('/:status')
 router.route('/respond/:id')
     .put(controller.setStatus);
 
+
 export let subscriptionRouter = router;

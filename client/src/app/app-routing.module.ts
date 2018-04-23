@@ -11,7 +11,6 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
 import { RoleGuardService as RoleGuard } from './role-guard.service';
 import {SubscriptionComponent} from "./subscription/subscription.component";
-import {SubscriptionManageComponent} from "./subscription-manage/subscription-manage.component";
 import {SubscriptionAddComponent} from "./subscription-add/subscription-add.component";
 
 const routes: Routes = [
@@ -20,7 +19,6 @@ const routes: Routes = [
   { path: 'analyzes/detail/:id', component: AnalysisDetailComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'subscription', component: SubscriptionComponent, canActivate: [AuthGuard] },
   { path: 'subscription/add', component: SubscriptionAddComponent, canActivate: [AuthGuard] },
-  { path: 'subscription/manage', component: SubscriptionManageComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },

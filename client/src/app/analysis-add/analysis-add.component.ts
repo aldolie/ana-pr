@@ -52,7 +52,7 @@ export class AnalysisAddComponent implements OnInit {
         this.router.navigate(['dashboard']);
     }, error => {
       console.log(error);
-    })          
+    });
   }
 
 }
