@@ -13,9 +13,6 @@ export class SocketService {
 
   public initSocket(priviledge: number): void {
     this.socket = socketIo(environment.serverUrl);
-    this.socket.on('connect', conn => {
-      this.socket.emit('room', { priviledge: priviledge });
-    });
   }
 
   public onMessage(): Observable<Analysis> {
