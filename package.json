@@ -20,6 +20,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^3.5.0"
+    "concurrently": "^3.5.1"
+  },
+  "dependencies": {
+    "mime": "^2.3.1"
   }
 }

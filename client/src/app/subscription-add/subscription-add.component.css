@@ -1,0 +1,12 @@
+.mat-card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-form-field {
+    flex: 1 1 auto;
+}
+
+.mat-card-footer {
+    padding: 24px;
+}

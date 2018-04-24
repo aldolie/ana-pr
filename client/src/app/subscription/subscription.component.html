@@ -1,0 +1,73 @@
+<mat-toolbar>
+  <button mat-raised-button color="primary" routerLink="/subscription/add" *ngIf="isAdmin == false">
+    <mat-icon>add</mat-icon>
+    <span>New Subscription</span>
+  </button>
+  <span class="fill-space"></span>
+  <mat-form-field mat-direction="right">
+    <mat-select [(value)]="filterValue" (change)="applyFilter()">
+      <mat-option *ngFor="let status of statuses" [value]="status.value">{{ status.text }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-toolbar>
+
+<mat-table #table [dataSource]="dataSource">
+  <!-- Email Column -->
+  <ng-container matColumnDef="email" *ngIf="isAdmin == true">
+    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+    <mat-cell *matCellDef="let subscription"> {{subscription.user.email}} </mat-cell>
+  </ng-container>
+
+  <!-- Bank Name Column -->
+  <ng-container matColumnDef="bankName">
+    <mat-header-cell *matHeaderCellDef> Bank Name </mat-header-cell>
+    <mat-cell *matCellDef="let subscription"> {{subscription.bankName}} </mat-cell>
+  </ng-container>
+
+  <!-- Account Name Column -->
+  <ng-container matColumnDef="accountName">
+    <mat-header-cell *matHeaderCellDef> Account Name </mat-header-cell>
+    <mat-cell *matCellDef="let subscription"> {{subscription.accountName}} </mat-cell>
+  </ng-container>
+
+  <!-- Account Number Column -->
+  <ng-container matColumnDef="accountNumber">
+    <mat-header-cell *matHeaderCellDef> Account Number </mat-header-cell>
+    <mat-cell *matCellDef="let subscription"> {{subscription.accountNumber}} </mat-cell>
+  </ng-container>
+
+  <!-- Payment Proof Column -->
+  <ng-container matColumnDef="paymentProof">
+    <mat-header-cell *matHeaderCellDef> Payment Proof </mat-header-cell>
+    <mat-cell *matCellDef="let subscription"> <img src="{{url}}/img/{{subscription.paymentProof}}"/> </mat-cell>
+  </ng-container>
+
+  <!-- Priviledge Column -->
+  <ng-container matColumnDef="priviledge">
+    <mat-header-cell *matHeaderCellDef> Priviledge </mat-header-cell>
+    <mat-cell *matCellDef="let subscription"> {{priviledges[subscription.priviledge - 1]}} </mat-cell>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let subscription"> {{statuses[subscription.status].text}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+    <mat-cell *matCellDef="let subscription">
+      <button mat-raised-button color="warn" *ngIf="subscription.status == 1 && isAdmin == false" (click)="cancel(subscription.id)">Cancel</button>
+      <button mat-raised-button color="primary" *ngIf="subscription.status == 1 && isAdmin == true" (click)="approve(subscription.id)">Approve</button>
+      <button mat-raised-button color="warn" *ngIf="subscription.status == 1 && isAdmin == true" (click)="reject(subscription.id)">Reject</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="(isAdmin) ? adminDisplayedColumns : displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: (isAdmin) ? adminDisplayedColumns : displayedColumns;"></mat-row>
+
+</mat-table>
+<mat-paginator [length]="size"
+               [pageSize]="10"
+               (page)="pageEvent = getData($event)">
+</mat-paginator>

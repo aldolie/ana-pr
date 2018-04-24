@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Analysis } from '../../models/Analysis';
 import { Priviledges } from '../../util/Priviledge';
+import io from "../../../index";
 
 export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
@@ -60,7 +61,10 @@ export let controller = {
     },
     post: (req: Request, res: Response, next: NextFunction) => {
         let { name, value, priviledge } = req.body;
+        let room = ['', 'trade', 'analysis'];
         Analysis.create({name: name, priviledge: priviledge, value: value}).then(analysis => {
+            console.log('sending to ' + room[analysis.priviledge]);
+            io.to(room[analysis.priviledge]).emit('message', analysis);
             res.status(201).json(analysis);
         });
 

@@ -13,7 +13,7 @@ export function appMiddleware(app: Express) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-        app.use(bodyParser.urlencoded({ extended: true }))
+        app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
         next();
     }

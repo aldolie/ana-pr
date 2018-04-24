@@ -64,7 +64,8 @@ export class UserDetailComponent implements OnInit {
         postalCode: postalCode,
         phoneNumber:phoneNumber,
         role:role,
-        priviledge: (basic ? 1 : 0 ) + ( pro ? 2 : 0)
+        priviledge: (basic ? 1 : 0 ) + ( pro ? 2 : 0),
+        expiredAt: null
       }).subscribe(user => {
         this.setValue(user);
       }, error => {

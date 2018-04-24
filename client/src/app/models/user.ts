@@ -10,4 +10,5 @@ export class User {
   region: string;
   postalCode: string;
   phoneNumber: string;
+  expiredAt: Date;
 }
