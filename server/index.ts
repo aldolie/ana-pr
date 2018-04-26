@@ -12,14 +12,7 @@ server.listen(config.port, () => {
 });
 
 io.on('connect', (socket: any) => {
-    socket.on('room', (data: any) => {
-        if (data.priviledge >= 1) {
-            socket.join('trade');
-        }
-        if (data.priviledge >= 3) {
-            socket.join('analysis');
-        }
-    });
+    socket.join('broadcast');
 });
 
 export default io;

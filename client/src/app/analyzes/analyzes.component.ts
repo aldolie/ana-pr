@@ -4,6 +4,7 @@ import {AnalysisService} from '../analysis.service';
 import {AuthService} from '../auth.service';
 import {PageEvent} from '@angular/material';
 import {SocketService} from "../socket.service";
+import {Message} from "../models/message";
 
 
 @Component({
@@ -43,8 +44,13 @@ export class AnalyzesComponent implements OnInit {
     initSocketConnection() {
         this.socketService.initSocket(this.authService.getPriviledge());
         this.ioConnection = this.socketService.onMessage()
-            .subscribe((message: Analysis) => {
-                this.analyzes.unshift(message);
+            .subscribe((message: Message) => {
+                if (message.priviledge <= this.authService.getPriviledge()) {
+                    this.analysisService.getAnalysis(message.id)
+                        .subscribe(data => {
+                            this.analyzes.unshift(data);
+                        });
+                }
             });
     }
 
