@@ -6,13 +6,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Analysis } from './models/analysis';
 import { environment } from '../environments/environment';
+import { ToasterService } from './toaster.service';
 
 @Injectable()
 export class AnalysisService {
 
   url: string = environment.apiUrl + "/analyzes";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public toaster: ToasterService) { }
 
   getAnalyzes(page: number): Observable<Analysis[]> {
 
@@ -20,7 +21,8 @@ export class AnalysisService {
     return this.http.get(this.url, {params: params}).map((data: any) => {
 
       return data;
-    }).catch((error: Response) => {
+    }).catch((error) => {
+      this.toaster.showError(error.error);
       return Observable.throw(error);
     });
   }
@@ -28,7 +30,8 @@ export class AnalysisService {
   getAnalysis(id: number): Observable<Analysis> {
      return this.http.get(this.url + '/' + id).map(data => {
          return data;
-     }).catch((error: Response) => {
+     }).catch((error) => {
+      this.toaster.showError(error);
          return Observable.throw(error);
      });
   }
@@ -36,7 +39,8 @@ export class AnalysisService {
   updateAnalysis(id: number, analysis: Analysis): Observable<Analysis> {
     return this.http.put(this.url + '/' + id, analysis).map(data => {
          return data;
-     }).catch((error: Response) => {
+     }).catch((error) => {
+      this.toaster.showError(error);
          return Observable.throw(error);
      });
   }
@@ -44,7 +48,8 @@ export class AnalysisService {
   createAnalysis(analysis: Analysis): Observable<Analysis> {
     return this.http.post(this.url, analysis).map(data => {
          return data;
-     }).catch((error: Response) => {
+     }).catch((error) => {
+      this.toaster.showError(error);
          return Observable.throw(error);
      });
   }

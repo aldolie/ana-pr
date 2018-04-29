@@ -34,6 +34,7 @@ import {SubscriptionComponent} from './subscription/subscription.component';
 import {SubscriptionAddComponent} from './subscription-add/subscription-add.component';
 import {SubscriptionService} from "./subscription.service";
 import {SocketService} from "./socket.service";
+import {ToasterService} from "./toaster.service";
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import {SocketService} from "./socket.service";
         AuthGuardService,
         RoleGuardService,
         SubscriptionService,
+        ToasterService,
         SocketService,
         {
             provide: HTTP_INTERCEPTORS,

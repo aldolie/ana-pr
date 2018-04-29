@@ -6,6 +6,7 @@ import * as moment from "moment";
 import {Session} from './models/session';
 import * as jwt_decode from 'jwt-decode';
 import {environment} from '../environments/environment';
+import {ToasterService} from './toaster.service';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
 
     session: Session;
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private toaster: ToasterService) {
         this.fetchSession();
     }
 
@@ -34,6 +35,7 @@ export class AuthService {
             this.router.navigate(['dashboard']);
 
         }, error => {
+            this.toaster.showError(error.error);
             console.log(error);
         });
     }
