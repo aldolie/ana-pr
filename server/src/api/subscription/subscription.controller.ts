@@ -20,7 +20,7 @@ function querySubscription(req: Request, res: Response, condition: any = {}, lim
                 ['status', 'ASC']
             ]
         };
-        condition = { ...condition, ...limitCondition, ...others };
+        condition = { ...limitCondition, ...others, ...condition };
         Subscription.findAll(condition).then(subscriptions => {
             res.json({
                 'result': subscriptions,
@@ -55,6 +55,18 @@ export let controller = {
             delete condition.where.status;
         }
         querySubscription(req, res, condition);
+    },
+    getLatest: (req:Request, res:Response, next: NextFunction) => {
+        let condition = {
+            where: {
+                userId: req.user.id,
+                status: { $ne: SubscriptionStatuses.getCancelledStatus() },
+                order: [
+                    ['id', 'DESC']
+                ]
+            }
+        };
+        querySubscription(req, res, condition, 1, 0);
     },
     getOwnByStatus: (req: Request, res: Response, next: NextFunction) => {
         let status = req.params.status || -1;

@@ -8,8 +8,8 @@ router.route('/')
     .post(controller.post);
 router.route('/cancel/:id')
     .put(controller.cancel);
-router.route('/history/:status?')
-    .get(controller.getOwnByStatus);
+router.route('/history')
+    .get(controller.getLatest);
 
 router.use(adminMiddleware);
 

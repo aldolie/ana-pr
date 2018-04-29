@@ -1,3 +1,4 @@
+import * as path from "path";
 export const ENV = {
     dev: 'development',
     prod: 'production',
@@ -7,6 +8,7 @@ export const ENV = {
 let config = {
     environment: process.env.NODE_ENV || ENV.dev,
     port: process.env.PORT || 3000,
+    uploadPath: path.resolve(__dirname + '/../uploads'),
     logging: true
 };
 

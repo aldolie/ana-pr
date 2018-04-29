@@ -1,3 +1,13 @@
+<mat-toolbar>
+  <button mat-raised-button color="primary" routerLink="/subscription/add" *ngIf="isAdmin == false">
+    <mat-icon>add</mat-icon>
+    <span>New Subscription</span>
+  </button>
+  <span class="fill-space"></span>
+  <span *ngIf="expiredAt >= currentDate">
+    Active Subscription: {{ priviledges[priviledge - 1] }} ({{ expiredAt.toDateString() }})
+  </span>
+</mat-toolbar>
 <mat-card>
 	<mat-card-content >
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="content">

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SubscriptionService} from "../subscription.service";
 import {Router} from "@angular/router";
+import {AuthService} from "../auth.service";
 
 @Component({
     selector: 'app-subscription-add',
@@ -13,18 +14,22 @@ export class SubscriptionAddComponent implements OnInit {
     private bankName: string;
     private accountName: string;
     private accountNumber: string;
+    private step: number = 0;
 
     priviledges: any[] = [
-        {value: 1, text: 'Basic'},
-        {value: 3, text: 'Pro'}
+        {value: 1, text: 'Basic', price: '$25'},
+        {value: 3, text: 'Pro', price: '$250'}
     ];
 
     image: any;
+    isAdmin: boolean = false;
 
-    constructor(private router: Router, private subscriptionService: SubscriptionService) {
+    constructor(private router: Router, private subscriptionService: SubscriptionService, private authService: AuthService) {
+        this.isAdmin = authService.isAdmin();
     }
 
     ngOnInit() {
+        this.step = 0;
     }
 
     submit() {
@@ -36,10 +41,14 @@ export class SubscriptionAddComponent implements OnInit {
         formData.append('accountNumber', this.accountNumber);
         
         this.subscriptionService.createSubscription(formData).subscribe(analysis => {
-            this.router.navigate(['subscription']);
+            this.router.navigate([(this.isAdmin) ? 'subscription' : 'profile']);
         }, error => {
             console.log(error);
         });
+    }
+
+    next() {
+        this.step = 1;
     }
 
     setFile($event) {

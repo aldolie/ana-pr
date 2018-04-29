@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../models/user';
 import { ActivatedRoute } from '@angular/router';
 import { MeService } from '../me.service';
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -11,13 +12,21 @@ import { MeService } from '../me.service';
 })
 export class ProfileComponent implements OnInit {
   email: string;
-  form: FormGroup;                    
+  form: FormGroup;
+  isAdmin: boolean;
+  priviledge: number;
+  expiredAt: Date;
+  currentDate: Date = new Date();
+  priviledges: string[] = ['Basic', '', 'Pro'];
   private formSubmitAttempt: boolean;
 
   constructor(
     private fb: FormBuilder,
-    private meService: MeService
-  ) {}
+    private meService: MeService,
+    private authService: AuthService
+  ) {
+    this.isAdmin = authService.isAdmin();
+  }
 
   ngOnInit() {
 
@@ -86,6 +95,9 @@ export class ProfileComponent implements OnInit {
         this.form.controls['postalCode'].setValue(user.postalCode);
         this.form.controls['phoneNumber'].setValue(user.phoneNumber);
         this.form.controls['dateOfBirth'].setValue(user.dateOfBirth);
+
+        this.priviledge = user.priviledge;
+        this.expiredAt = new Date(user.expiredAt);
   }
 
 }

@@ -1,8 +1,4 @@
 <mat-toolbar>
-  <button mat-raised-button color="primary" routerLink="/subscription/add" *ngIf="isAdmin == false">
-    <mat-icon>add</mat-icon>
-    <span>New Subscription</span>
-  </button>
   <span class="fill-space"></span>
   <mat-form-field mat-direction="right">
     <mat-select [(value)]="filterValue" (change)="applyFilter()">
@@ -13,7 +9,7 @@
 
 <mat-table #table [dataSource]="dataSource">
   <!-- Email Column -->
-  <ng-container matColumnDef="email" *ngIf="isAdmin == true">
+  <ng-container matColumnDef="email">
     <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
     <mat-cell *matCellDef="let subscription"> {{subscription.user.email}} </mat-cell>
   </ng-container>
@@ -57,9 +53,8 @@
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
     <mat-cell *matCellDef="let subscription">
-      <button mat-raised-button color="warn" *ngIf="subscription.status == 1 && isAdmin == false" (click)="cancel(subscription.id)">Cancel</button>
-      <button mat-raised-button color="primary" *ngIf="subscription.status == 1 && isAdmin == true" (click)="approve(subscription.id)">Approve</button>
-      <button mat-raised-button color="warn" *ngIf="subscription.status == 1 && isAdmin == true" (click)="reject(subscription.id)">Reject</button>
+      <button mat-raised-button color="primary" (click)="approve(subscription.id)">Approve</button>
+      <button mat-raised-button color="warn" (click)="reject(subscription.id)">Reject</button>
     </mat-cell>
   </ng-container>
 

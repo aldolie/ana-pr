@@ -9,6 +9,7 @@ import * as multer from "multer";
 import * as UUID from "uuid";
 import * as path from "path";
 import {imageRouter} from "./imageRouter";
+import config from "./config/index";
 
 let app = express();
 app.use(appMiddleware(app));
@@ -32,7 +33,7 @@ app.use('/img', imageRouter);
 app.use(errorHandler);
 
 let storage = multer.diskStorage({
-    destination: './src/uploads',
+    destination: config.uploadPath,
     filename: (req, file, callback) => {
         let filename = UUID.v4() + path.extname(file.originalname);
         callback(null, filename);
