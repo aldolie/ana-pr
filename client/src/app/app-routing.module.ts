@@ -9,9 +9,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './users/users.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
+import { NoAuthGuardService as NoAuthGuard } from './no-auth-guard.service';
 import { RoleGuardService as RoleGuard } from './role-guard.service';
 import {SubscriptionComponent} from "./subscription/subscription.component";
 import {SubscriptionAddComponent} from "./subscription-add/subscription-add.component";
+import { RegisterComponent } from "./register/register.component"; 
 
 const routes: Routes = [
   { path: 'analyzes', component: AnalyzesComponent, canActivate: [AuthGuard] },
@@ -23,7 +25,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'users/detail/:id', component: UserDetailComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
 

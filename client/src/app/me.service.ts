@@ -27,6 +27,7 @@ export class MeService {
 
   updateUser(user: User): Observable<User> {
     return this.http.put(this.url, user).map(data => {
+         this.toaster.showSuccess('Update success');
          return data;
      }).catch((error) => {
          this.toaster.showError(error.error);

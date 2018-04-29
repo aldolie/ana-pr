@@ -20,6 +20,7 @@ import {AnalysisService} from './analysis.service';
 import {UserService} from './user.service';
 import {AuthService} from './auth.service';
 import {AuthGuardService} from './auth-guard.service';
+import {NoAuthGuardService} from './no-auth-guard.service';
 import {RoleGuardService} from './role-guard.service';
 import {AppRoutingModule} from './/app-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -36,6 +37,7 @@ import {SubscriptionService} from "./subscription.service";
 import {SocketService} from "./socket.service";
 import {ToasterService} from "./toaster.service";
 import {MeService} from "./me.service";
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -53,6 +55,7 @@ import {MeService} from "./me.service";
         AnalysisAddComponent,
         SubscriptionComponent,
         SubscriptionAddComponent,
+        RegisterComponent,
     ],
     imports: [
         BrowserModule,
@@ -76,6 +79,7 @@ import {MeService} from "./me.service";
         ToasterService,
         SocketService,
         MeService,
+        NoAuthGuardService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

@@ -15,6 +15,8 @@ export class AuthService {
 
     url: string = environment.apiUrl + "/auth/login";
 
+    registrationUrl: string = environment.apiUrl + "/registration";
+
     session: Session;
 
     constructor(private http: HttpClient, private router: Router, private toaster: ToasterService) {
@@ -32,11 +34,25 @@ export class AuthService {
             localStorage.setItem('expires_at', JSON.stringify(moment().second(expiresIn).valueOf()));
             this.fetchSession();
             this.publishSession();
+             this.toaster.showSuccess('Successfully Logged in');
             this.router.navigate(['dashboard']);
 
         }, error => {
             this.toaster.showError(error.error);
             console.log(error);
+        });
+    }
+
+    register(username: string, password: string) {
+        const credentials = {
+            email: username,
+            password: password
+        };
+        this.http.post(this.registrationUrl, credentials).subscribe((data: any) => {
+            this.toaster.showSuccess("Registration Success, Please verify your email");
+            this.router.navigate(['login']);
+        }, error => {
+            this.toaster.showError(error.error);
         });
     }
 

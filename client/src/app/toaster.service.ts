@@ -14,4 +14,10 @@ export class ToasterService {
         });
   }
 
+  showSuccess(message: string) {
+   this.snackBar.open(message, 'Dismiss', {
+     duration: 3000
+   })
+  }
+
 }

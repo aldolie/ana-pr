@@ -37,6 +37,7 @@ export class UserService {
 
   updateUser(id: number, analysis: User): Observable<User> {
     return this.http.put(this.url + '/' + id, analysis).map(data => {
+         this.toaster.showSuccess('Update user success');
          return data;
      }).catch((error) => {
          this.toaster.showError(error.error);
