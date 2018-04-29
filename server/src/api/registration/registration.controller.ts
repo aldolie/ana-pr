@@ -77,8 +77,8 @@ export let controller = {
                 });
             } else {
                 res.status(409).json({
-                    errorCode: 409,
-                    errorMessage: "email already registered"
+                    code: 409,
+                    message: "email already registered"
                 });
             }
         }).catch(error => {
