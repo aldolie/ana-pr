@@ -29,11 +29,14 @@ export let controller = {
                     expiresIn: expiresIn,
                 });
             } else {
-                res.sendStatus(400);
+                res.status(400).json({
+                    message: 'Username and Password doesn\`t match'
+                });
             }
         }).catch(error => {
-            console.log(error);
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         })
 
     },

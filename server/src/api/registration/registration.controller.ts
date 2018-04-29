@@ -58,7 +58,9 @@ export let controller = {
                         transporter.sendMail(mailOptions, (error: any, info: any) => {
                             if (error) {
                                 console.log(error);
-                                res.sendStatus(400);
+                                res.status(500).json({
+                                    message: 'Unknown error has occured'
+                                });
                                 return t.rollback();
                             } else {
                                 res.sendStatus(201);
@@ -67,7 +69,9 @@ export let controller = {
                         });
                     }).catch(error => {
                         console.log(error);
-                        res.sendStatus(400);
+                        res.status(500).json({
+                            message: 'Unknown error has occured'
+                        });
                         return t.rollback();
                     });
                 });
@@ -78,7 +82,9 @@ export let controller = {
                 });
             }
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     }
 };

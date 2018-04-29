@@ -37,11 +37,15 @@ export let controller = {
                     'pages': pages
                 })
             }).catch(error => {
-                res.sendStatus(400);
+                res.status(500).json({
+                    message: 'Unknown error has occured'
+                });
             })
 
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     },
     getById: (req: Request, res: Response, next: NextFunction) => {
@@ -54,12 +58,16 @@ export let controller = {
             }
         }).then(analysis => {
             if (analysis == null) {
-                res.sendStatus(404);
+                res.status(404).json({
+                    message: 'Analysis Not Found'
+                });
             } else {
                 res.json(analysis);
             }
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     },
     post: (req: Request, res: Response, next: NextFunction) => {
@@ -81,7 +89,9 @@ export let controller = {
             }
         }).then(analysis => {
             if (analysis == null) {
-                res.sendStatus(404);
+                res.status(404).json({
+                    message: 'Analysis not found'
+                });
             } else {
                 analysis.name = name;
                 analysis.value = value;
@@ -89,11 +99,15 @@ export let controller = {
                 analysis.save().then(savedAnalysis => {
                     res.json(analysis);
                 }).catch(error => {
-                    res.sendStatus(400);
+                    res.status(400).json({
+                        message: 'Failed to save analysis'
+                    });
                 });
             }
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     },
     delete: (req: Request, res: Response, next: NextFunction) => {
@@ -106,13 +120,17 @@ export let controller = {
             }
         }).then(analysis => {
             if (analysis == null) {
-                res.sendStatus(404);
+                res.status(404).json({
+                    message: 'Analysis not found'
+                });
             } else {
                 analysis.destroy();
                 res.sendStatus(204);
             }
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     },
 };

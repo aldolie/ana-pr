@@ -21,23 +21,31 @@ export let controller = {
                     'pages': pages
                 })
             }).catch(error => {
-                res.sendStatus(400);
+                res.status(500).json({
+                    message: 'Unknown error has occured'
+                });
             })
 
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     },
     getById: (req: Request, res: Response, next: NextFunction) => {
         let id = req.params.id;
         User.scope('full').findById(id).then(user => {
             if (user == null) {
-                res.sendStatus(404);
+            res.status(404).json({
+                message: 'User Not Found'
+            });
             } else {
                 res.json(user);
             }
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     },
     post: (req: Request, res: Response, next: NextFunction) => {
@@ -57,7 +65,9 @@ export let controller = {
         }).then(user => {
             res.status(201).json(user);
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(400).json({
+                message: 'Failed to save user'
+            });
         });
 
     },
@@ -66,7 +76,9 @@ export let controller = {
         let id = req.params.id;
         User.scope('full').findById(id).then(user => {
             if (user == null) {
-                res.sendStatus(404);
+                res.status(404).json({
+                    message: 'User not found'
+                });
             } else {
                 user.priviledge = priviledge;
                 user.role = role;
@@ -81,11 +93,15 @@ export let controller = {
                 user.save().then(savedUser => {
                     res.json(savedUser);
                 }).catch(error => {
-                    res.sendStatus(400);
+                    res.status(400).json({
+                        message: 'Failed to save user'
+                    });
                 });
             }
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     }
 };

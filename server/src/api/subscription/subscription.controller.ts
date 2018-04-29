@@ -29,10 +29,14 @@ function querySubscription(req: Request, res: Response, condition: any = {}, lim
                 'pages': pages.pages
             });
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     }).catch(error => {
-        res.sendStatus(400);
+        res.status(500).json({
+            message: 'Unknown error has occured'
+        });
     });
 }
 
@@ -71,7 +75,9 @@ export let controller = {
         fileUpload(req, res, (err) => {
             let { bankName, accountName, accountNumber, priviledge } = req.body;
             if (!req.file) {
-                res.sendStatus(400);
+                res.status(400).json({
+                    message: 'File is required'
+                });
             } else {
                 Subscription.create({
                     userId: req.user.id,
@@ -84,7 +90,9 @@ export let controller = {
                 }).then(subscription => {
                     res.status(201).json(subscription);
                 }).catch(error => {
-                    res.sendStatus(400);
+                    res.status(404).json({
+                        message: 'Failed to save subscription'
+                    });
                 });
             }
         });
@@ -99,17 +107,23 @@ export let controller = {
             }
         }).then(subscription => {
             if (subscription == null) {
-                res.sendStatus(404);
+                res.status(404).json({
+                    message: 'Subscription not found'
+                });
             } else {
                 subscription.status = SubscriptionStatuses.getCancelledStatus();
                 subscription.save().then(savedSubscription => {
                     res.json(savedSubscription);
                 }).catch(error => {
-                    res.sendStatus(400);
+                    res.status(400).json({
+                        message: 'Failed to save subscription'
+                    });
                 });
             }
         }).catch(error => {
-            res.sendStatus(400);
+            res.status(500).json({
+                message: 'Unknown error has occured'
+            });
         });
     },
     setStatus: (req: Request, res: Response, next: NextFunction) => {
@@ -118,7 +132,9 @@ export let controller = {
         return __sequelize.transaction().then((t: Transaction) => {
             return Subscription.findById(id, { transaction: t }).then(subscription => {
                 if (subscription == null) {
-                    res.sendStatus(404);
+                    res.status(404).json({
+                        message: 'Subscription not found'
+                    });
                     return t.rollback();
                 } else {
                     subscription.status = status;
@@ -127,7 +143,9 @@ export let controller = {
                         if (status == SubscriptionStatuses.getApprovedStatus()) {
                             return User.findById(savedSubscription.userId, { transaction: t }).then(user => {
                                 if (user == null) {
-                                    res.sendStatus(404);
+                                    res.status(404).json({
+                                        message: 'User Not Found'
+                                    });
                                     return t.rollback();
                                 } else if (user.priviledge <= savedSubscription.priviledge) {
                                     user.priviledge = savedSubscription.priviledge;
@@ -136,7 +154,9 @@ export let controller = {
                                         res.json(savedSubscription);
                                         return t.commit();
                                     }).catch(error => {
-                                        res.sendStatus(400);
+                                        res.status(400).json({
+                                            message: 'Failed to apply subscription'
+                                        });
                                         return t.rollback();
                                     });
                                 } else {
@@ -144,7 +164,9 @@ export let controller = {
                                     return t.commit();
                                 }
                             }).catch(error => {
-                                res.sendStatus(400);
+                                res.status(500).json({
+                                    message: 'Unknown error has occured'
+                                });
                                 return t.rollback();
                             });
                         } else {
@@ -152,12 +174,16 @@ export let controller = {
                             return t.commit();
                         }
                     }).catch(error => {
-                        res.sendStatus(400);
+                        res.status(400).json({
+                            message: 'Failed to save subscription'
+                        });
                         return t.rollback();
                     });
                 }
             }).catch(error => {
-                res.sendStatus(400);
+                res.status(500).json({
+                    message: 'Unknown error has occured'
+                });
                 return t.rollback();
             });
         });
