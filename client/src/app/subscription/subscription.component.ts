@@ -39,63 +39,38 @@ export class SubscriptionComponent implements OnInit {
 
     url: string = environment.serverUrl;
 
-    isAdmin: boolean = false;
 
     constructor(private authService: AuthService, private subscriptionService: SubscriptionService) {
-        this.isAdmin = authService.isAdmin();
     }
 
     ngOnInit() {
-        this.getSubs();
-    }
-
-    cancel(id: number) {
-        this.subscriptionService.cancelSubscription(id).subscribe((data: any) => {
-            this.getSubs();
-        });
+        this.getSubscriptions();
     }
 
     approve(id: number) {
         this.subscriptionService.updateSubscription(id, 3).subscribe((data: any) => {
-            this.getSubs();
+            this.getSubscriptions();
         });
     }
 
     reject(id: number) {
         this.subscriptionService.updateSubscription(id, 4).subscribe((data: any) => {
-            this.getSubs();
+            this.getSubscriptions();
         });
     }
 
     applyFilter(): void {
-        this.getSubs();
-    }
-
-    getSubs() {
-        if (this.isAdmin) {
-            this.getSubscriptions();
-        } else {
-            this.getSubscriptionHistories();
-        }
+        this.getSubscriptions();
     }
 
     getData($event): void {
         this.page = $event.pageIndex;
-        this.getSubs();
+        this.getSubscriptions();
         return $event;
     }
 
     getSubscriptions() {
         this.subscriptionService.getSubscriptions(this.page + 1, this.filterValue).subscribe((data: any) => {
-            this.page = data.page - 1;
-            this.size = data.count;
-            this.subscriptions = data.result;
-            this.dataSource = new MatTableDataSource(this.subscriptions);
-        });
-    }
-
-    getSubscriptionHistories() {
-        this.subscriptionService.getSubscriptionHistories(this.page + 1, this.filterValue).subscribe((data: any) => {
             this.page = data.page - 1;
             this.size = data.count;
             this.subscriptions = data.result;

@@ -1,10 +1,10 @@
-.fill-space {
-    flex: 1 1 auto;
-}
-
 .mat-toolbar {
     background: transparent;
     font-size: 16px;
+}
+
+.fill-space {
+    flex: 1 1 auto;
 }
 
 img {

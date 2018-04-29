@@ -12,13 +12,9 @@ export class SubscriptionService {
 
   constructor(private http: HttpClient, public toaster: ToasterService) { }
 
-  getSubscriptionHistories(page: number, status: number = -1): Observable<Subscription[]> {
-    let params = new HttpParams().set('page', String(page));
+  getLatestSubscription(): Observable<Subscription[]> {
     let url = this.url + '/history';
-    if (status !== -1) {
-      url += '/' + status;
-    }
-    return this.http.get(url, {params: params}).map((data: any) => {
+    return this.http.get(url).map((data: any) => {
       return data;
     }).catch((error) => {
       this.toaster.showError(error.error);

@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'analyzes', component: AnalyzesComponent, canActivate: [AuthGuard] },
   { path: 'analyzes/add', component: AnalysisAddComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'analyzes/detail/:id', component: AnalysisDetailComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'subscription', component: SubscriptionComponent, canActivate: [AuthGuard] },
+  { path: 'subscription', component: SubscriptionComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'subscription/add', component: SubscriptionAddComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
