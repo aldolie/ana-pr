@@ -15,9 +15,10 @@ export class UserService {
 
   constructor(private http: HttpClient, public toaster: ToasterService) { }
 
-  getUsers(page: number): Observable<User[]> {
+  getUsers(email: string ,page: number): Observable<User[]> {
 
-    let params = new HttpParams().set('page', String(page));
+    let params = new HttpParams().set('page', String(page))
+                                 .set('email', String(email));
     return this.http.get(this.url, {params: params}).map((data: any) => {
       return data;
     }).catch((error) => {

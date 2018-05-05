@@ -47,6 +47,7 @@ export class SubscriptionService {
 
   updateSubscription(id: number, status: number): Observable<Subscription> {
     return this.http.put(this.url + '/respond/' + id, { status: status }).map(data => {
+      this.toaster.showSuccess('Subscription Updated');
       return data;
     }).catch((error) => {
       this.toaster.showError(error.error);
@@ -56,6 +57,7 @@ export class SubscriptionService {
 
   createSubscription(formData: any): Observable<Subscription> {
     return this.http.post(this.url, formData).map(data => {
+      this.toaster.showSuccess('New Subscription ceated');
       return data;
     }).catch((error) => {
       this.toaster.showError(error.error);

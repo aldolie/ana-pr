@@ -53,13 +53,13 @@
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
     <mat-cell *matCellDef="let subscription">
-      <button mat-raised-button color="primary" (click)="approve(subscription.id)">Approve</button>
-      <button mat-raised-button color="warn" (click)="reject(subscription.id)">Reject</button>
+      <button *ngIf="subscription.status == 1" mat-raised-button color="primary" (click)="approve(subscription.id)">Approve</button>
+      <button *ngIf="subscription.status == 1" mat-raised-button color="warn" (click)="reject(subscription.id)">Reject</button>
     </mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="(isAdmin) ? adminDisplayedColumns : displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: (isAdmin) ? adminDisplayedColumns : displayedColumns;"></mat-row>
+  <mat-header-row *matHeaderRowDef="adminDisplayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: adminDisplayedColumns"></mat-row>
 
 </mat-table>
 <mat-paginator [length]="size"

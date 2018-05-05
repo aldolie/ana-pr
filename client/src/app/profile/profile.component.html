@@ -1,12 +1,14 @@
-<mat-toolbar>
-  <button mat-raised-button color="primary" routerLink="/subscription/add" *ngIf="isAdmin == false">
-    <mat-icon>add</mat-icon>
-    <span>New Subscription</span>
-  </button>
-  <span class="fill-space"></span>
-  <span *ngIf="expiredAt >= currentDate">
-    Active Subscription: {{ priviledges[priviledge - 1] }} ({{ expiredAt.toDateString() }})
+<mat-toolbar *ngIf="isAdmin == false">
+    <button mat-raised-button color="primary" routerLink="/subscription/add"  *ngIf="subscription == null || (expiredAt !=null && expiredAt.getTime() <= currentDate.getTime()+ (3600 * 24 * 5 * 1000)) ">
+      <mat-icon>add</mat-icon>
+      <span>New Subscription</span>
+    </button>
+  <span class="fill-space" *ngIf="subscription != null && expiredAt != null && expiredAt.getTime() > currentDate.getTime();else no_subscription">
+    Active Subscription: {{ priviledges[subscription.priviledge - 1] }} ({{ expiredAt.toDateString() }})
   </span>
+  <ng-template #no_subscription>
+    <span class="fill-space">No Active Subscription</span>
+  </ng-template>
 </mat-toolbar>
 <mat-card>
 	<mat-card-content >

@@ -14,6 +14,8 @@ export class UsersComponent implements OnInit {
   page: number = 0;
   size: number = 0;
 
+  searchValue: string = "";
+
 
   users: User[];
 
@@ -30,21 +32,25 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUsers();
+    this.getUsers(this.searchValue);
   }
 
   getData($event): any {
      this.page = $event.pageIndex;
-     this.getUsers();
+     this.getUsers(this.searchValue);
      return $event;
   }
 
-  getUsers(): void {
-    this.userService.getUsers(this.page + 1).subscribe((data: any) => {
+  getUsers(email: string): void {
+    this.userService.getUsers(email ,this.page + 1).subscribe((data: any) => {
       this.page = data.page - 1;
       this.size = data.count;
       this.users = data.result;
       this.dataSource = new MatTableDataSource(this.users);
     });
+  }
+
+  searchUser() {
+     this.getUsers(this.searchValue);
   }
 }

@@ -4,6 +4,8 @@ import { User } from '../models/user';
 import { ActivatedRoute } from '@angular/router';
 import { MeService } from '../me.service';
 import {AuthService} from "../auth.service";
+import {SubscriptionService} from "../subscription.service";
+import {Subscription} from "../models/subscription";
 
 @Component({
   selector: 'app-profile',
@@ -17,13 +19,15 @@ export class ProfileComponent implements OnInit {
   priviledge: number;
   expiredAt: Date;
   currentDate: Date = new Date();
-  priviledges: string[] = ['Basic', '', 'Pro'];
+  subscription: Subscription;
+
   private formSubmitAttempt: boolean;
 
   constructor(
     private fb: FormBuilder,
     private meService: MeService,
-    private authService: AuthService
+    private authService: AuthService,
+    private subscriptionService: SubscriptionService
   ) {
     this.isAdmin = authService.isAdmin();
   }
@@ -43,6 +47,7 @@ export class ProfileComponent implements OnInit {
     });
     this.form.get('email').disable();
     this.getUser();
+    this.getSubscription();
   }
 
   isFieldInvalid(field: string) { // {6}
@@ -65,9 +70,7 @@ export class ProfileComponent implements OnInit {
         region: region,
         postalCode: postalCode,
         phoneNumber:phoneNumber,
-        role:null,
-        priviledge: null,
-        expiredAt: null
+        role:null
       }).subscribe(user => {
         this.setValue(user);
       }, error => {
@@ -86,6 +89,26 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+  getSubscription(): void {
+    this.subscriptionService.getLatestSubscription().subscribe( (subscriptions: any) => {
+        let subs: Array<Subscription> = subscriptions.result;
+        if (subs.length > 0) {
+          this.subscription = subs[0];
+          if (this.subscription.expiredAt != null) {
+            this.expiredAt = new Date(this.subscription.expiredAt);
+          } else {
+            this.expiredAt = null;
+          }
+        } else {
+          this.subscription = null;
+          this.expiredAt = null
+        }
+
+    }, error => {
+      console.log(error);
+    })
+  }
+
   setValue(user: User): void {
         this.email = user.email;
         this.form.controls['email'].setValue(user.email);
@@ -95,9 +118,6 @@ export class ProfileComponent implements OnInit {
         this.form.controls['postalCode'].setValue(user.postalCode);
         this.form.controls['phoneNumber'].setValue(user.phoneNumber);
         this.form.controls['dateOfBirth'].setValue(user.dateOfBirth);
-
-        this.priviledge = user.priviledge;
-        this.expiredAt = new Date(user.expiredAt);
   }
 
 }

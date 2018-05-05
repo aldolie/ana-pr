@@ -6,7 +6,6 @@
         <button mat-button routerLink="/dashboard">Dashboard</button>
         <button *ngIf="isAdmin" mat-button routerLink="/users">User</button>
         <button *ngIf="isAdmin" mat-button routerLink="/subscription">Subscription</button>
-        <button *ngIf="!isAdmin" mat-button routerLink="/subscription">Subscription</button>
         <button *ngIf="isLoggedIn" mat-button routerLink="/profile">Profile</button>
         <button mat-button  (click)="logout()">Logout</button>
     </div>
@@ -18,8 +17,7 @@
 <mat-menu  x-position="before" #menu="matMenu">
     <button mat-menu-item routerLink="/dashboard">Dashboard</button>
     <button *ngIf="isAdmin" mat-button routerLink="/users">User</button>
-    <button *ngIf="isAdmin" mat-button routerLink="/subscription/manage">Subscription</button>
-    <button *ngIf="!isAdmin" mat-button routerLink="/subscription">Subscription</button>
+    <button *ngIf="isAdmin" mat-button routerLink="/subscription">Subscription</button>
     <button *ngIf="isLoggedIn" mat-button routerLink="/profile">Profile</button>
     <button mat-button (click)="logout()">Logout</button>
     <!--<button mat-menu-item>Help</button>-->

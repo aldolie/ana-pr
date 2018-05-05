@@ -68,4 +68,10 @@ export class AnalyzesComponent implements OnInit {
         });
     }
 
+    delete(id: number): void {
+        this.analysisService.deleteAnalysis(id).subscribe((data: any) => {
+            this.getAnalyzes();   
+        })
+    }
+
 }

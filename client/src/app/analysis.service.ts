@@ -56,4 +56,13 @@ export class AnalysisService {
      });
   }
 
+  deleteAnalysis(id: number): Observable<Analysis> {
+     return this.http.delete(this.url + '/' + id).map(data => {
+         return data;
+     }).catch((error) => {
+      this.toaster.showError(error);
+         return Observable.throw(error);
+     });
+  }
+
 }

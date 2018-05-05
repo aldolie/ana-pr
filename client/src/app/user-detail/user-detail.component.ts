@@ -64,8 +64,6 @@ export class UserDetailComponent implements OnInit {
         postalCode: postalCode,
         phoneNumber:phoneNumber,
         role:role,
-        priviledge: (basic ? 1 : 0 ) + ( pro ? 2 : 0),
-        expiredAt: null
       }).subscribe(user => {
         this.setValue(user);
       }, error => {
@@ -97,8 +95,6 @@ export class UserDetailComponent implements OnInit {
         this.form.controls['dateOfBirth'].setValue(user.dateOfBirth);
         this.form.controls['active'].setValue(user.active);
         this.form.controls['role'].setValue(user.role);
-        this.form.controls['basic'].setValue((user.priviledge & 1) == 1)
-        this.form.controls['pro'].setValue((user.priviledge & 2) == 2)
   }
 
 }

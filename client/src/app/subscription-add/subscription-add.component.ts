@@ -14,7 +14,7 @@ export class SubscriptionAddComponent implements OnInit {
     private bankName: string;
     private accountName: string;
     private accountNumber: string;
-    private step: number = 0;
+    public step: number = 0;
 
     priviledges: any[] = [
         {value: 1, text: 'Basic', price: '$25'},

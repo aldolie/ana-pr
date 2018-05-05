@@ -10,4 +10,5 @@ export class Subscription {
     priviledge: number;
     status: number;
     respondedAt: Date;
+    expiredAt: Date;
 }

@@ -17,8 +17,6 @@ export class SubscriptionComponent implements OnInit {
 
     subscriptions: Subscription[];
 
-    displayedColumns = ['bankName', 'accountName', 'accountNumber', 'paymentProof', 'priviledge', 'status', 'action'];
-
     adminDisplayedColumns = ['email', 'bankName', 'accountName', 'accountNumber', 'paymentProof', 'priviledge', 'status', 'action'];
 
     priviledges: string[] = ['Basic', '', 'Pro'];
@@ -63,7 +61,7 @@ export class SubscriptionComponent implements OnInit {
         this.getSubscriptions();
     }
 
-    getData($event): void {
+    getData($event): any {
         this.page = $event.pageIndex;
         this.getSubscriptions();
         return $event;
