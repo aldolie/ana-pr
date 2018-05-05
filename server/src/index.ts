@@ -47,7 +47,7 @@ export const __sequelize = new Sequelize({
     dialect: 'mysql',
     host: 'localhost',
     username: 'root',
-    password: '',
+    password: 'root',
     modelPaths: [
         __dirname + '/models'
     ],

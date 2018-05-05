@@ -6,25 +6,24 @@ export let controller = {
     get: (req: Request, res: Response, next: NextFunction) => {
         let limit = 10;
         let offset = 0;
-        User.findAndCountAll().then(data => {
-            let page = req.query.page || 1;
+        let page = req.query.page || 1;
+        offset = limit * (page - 1);
+        let email  = req.query.email || '';
+        User.scope('full').findAndCount({
+            where:{
+                "email": { $like: "%" + email + "%" }
+            },
+            limit: limit,
+            offset: offset,
+        }).then(data => {
             let pages = Math.ceil(data.count / limit);
-            offset = limit * (page - 1);
-            User.scope('full').findAll({
-                limit: limit,
-                offset: offset,
-            }).then(users => {
-                res.json({
-                    'result': users,
-                    'count': data.count,
-                    'page': page,
-                    'pages': pages
-                })
-            }).catch(error => {
-                res.status(500).json({
-                    message: 'Unknown error has occured'
-                });
-            })
+            
+            res.json({
+                'result': data.rows,
+                'count': data.count,
+                'page': page,
+                'pages': pages
+            });
 
         }).catch(error => {
             res.status(500).json({
@@ -49,11 +48,10 @@ export let controller = {
         });
     },
     post: (req: Request, res: Response, next: NextFunction) => {
-        let {email, password, priviledge, role} = req.body;
+        let {email, password, role} = req.body;
         User.scope('full').create({
             email: email,
             password: Md5.hashStr(password),
-            priviledge: priviledge,
             role: role,
             active: false,
             name: '',
@@ -72,7 +70,7 @@ export let controller = {
 
     },
     put: (req: Request, res: Response, next: NextFunction) => {
-        let {priviledge, role, active, name, dateOfBirth, country, region, postalCode, phoneNumber} = req.body;
+        let {role, active, name, dateOfBirth, country, region, postalCode, phoneNumber} = req.body;
         let id = req.params.id;
         User.scope('full').findById(id).then(user => {
             if (user == null) {
@@ -80,7 +78,6 @@ export let controller = {
                     message: 'User not found'
                 });
             } else {
-                user.priviledge = priviledge;
                 user.role = role;
                 user.active = active;
                 user.name = name;

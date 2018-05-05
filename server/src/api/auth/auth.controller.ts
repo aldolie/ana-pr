@@ -20,7 +20,6 @@ export let controller = {
                 let data = {
                     id: user.id,
                     email: user.email,
-                    priviledge: user.priviledge,
                     role: user.role
                 };
                 let token = jwt.sign(data, 'secret', {expiresIn: expiresIn});

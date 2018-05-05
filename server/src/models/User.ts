@@ -2,11 +2,11 @@ import {Table, Model, PrimaryKey, Column, AutoIncrement, Length, DataType, IsEma
 
 
 @DefaultScope({
-  attributes: ['id', 'email', 'role', 'priviledge', 'expiredAt']
+  attributes: ['id', 'email', 'role']
 })
 @Scopes({
   full: {
-    attributes: [ 'id', 'email', 'password', 'role', 'priviledge', 'activationToken', 'active', 'name', 'dateOfBirth', 'country', 'region', 'postalCode', 'phoneNumber', 'expiredAt']
+    attributes: [ 'id', 'email', 'password', 'role', 'activationToken', 'active', 'name', 'dateOfBirth', 'country', 'region', 'postalCode', 'phoneNumber']
   }
 })
 @Table({
@@ -30,11 +30,6 @@ export class User extends Model<User> {
   @AllowNull(false)
   @Column(DataType.INTEGER)
   role: number;
-
-  
-  @AllowNull(false)
-  @Column(DataType.INTEGER)
-  priviledge: number;
 
   
   @AllowNull(false)
@@ -73,9 +68,5 @@ export class User extends Model<User> {
   @AllowNull(true)
   @Column({field: 'phone_number', type: DataType.TEXT})
   phoneNumber: string;
-
-  @AllowNull(true)
-  @Column({field: 'expired_at', type: DataType.DATE})
-  expiredAt: Date;
 
 }

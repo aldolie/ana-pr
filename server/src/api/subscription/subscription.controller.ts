@@ -8,25 +8,26 @@ import {__sequelize, upload} from "../../index";
 import {Transaction} from "sequelize";
 
 function querySubscription(req: Request, res: Response, condition: any = {}, limit: number = 10, offset: number = 0) {
-    Subscription.findAndCountAll(condition).then(data => {
-        let pages = paging.get(req, data.count, limit, offset);
-        let limitCondition = {
-            limit: pages.limit,
-            offset: pages.offset
-        };
-        let others = {
-            include: [User],
-            order: [
-                ['status', 'ASC']
-            ]
-        };
-        condition = { ...limitCondition, ...others, ...condition };
+    let page = req.query.page || 1;
+    let limitCondition = {
+        limit: limit,
+        offset: limit * (page - 1)
+    };
+    let others = {
+        include: [User],
+        order: [
+            ['status', 'ASC']
+        ]
+    };
+    condition = { ...limitCondition, ...others, ...condition };
+    Subscription.findAndCount(condition).then(data => {
+        let pages = Math.ceil(data.count / limit);
         Subscription.findAll(condition).then(subscriptions => {
             res.json({
                 'result': subscriptions,
                 'count': data.count,
-                'page': pages.page,
-                'pages': pages.pages
+                'page': page,
+                'pages': pages
             });
         }).catch(error => {
             res.status(500).json({
@@ -61,10 +62,11 @@ export let controller = {
             where: {
                 userId: req.user.id,
                 status: { $ne: SubscriptionStatuses.getCancelledStatus() },
-                order: [
-                    ['id', 'DESC']
-                ]
-            }
+                
+            },
+            order: [
+                ['id', 'DESC']
+            ]
         };
         querySubscription(req, res, condition, 1, 0);
     },
@@ -149,48 +151,45 @@ export let controller = {
                     });
                     return t.rollback();
                 } else {
-                    subscription.status = status;
-                    subscription.respondedAt = new Date();
-                    return subscription.save({ transaction: t }).then(savedSubscription => {
-                        if (status == SubscriptionStatuses.getApprovedStatus()) {
-                            return User.findById(savedSubscription.userId, { transaction: t }).then(user => {
-                                if (user == null) {
-                                    res.status(404).json({
-                                        message: 'User Not Found'
-                                    });
-                                    return t.rollback();
-                                } else if (user.priviledge <= savedSubscription.priviledge) {
-                                    user.priviledge = savedSubscription.priviledge;
-                                    user.expiredAt = Priviledges.getExpiredTime(savedSubscription.priviledge);
-                                    return user.save({ transaction: t }).then(savedUser => {
-                                        res.json(savedSubscription);
-                                        return t.commit();
-                                    }).catch(error => {
-                                        res.status(400).json({
-                                            message: 'Failed to apply subscription'
-                                        });
-                                        return t.rollback();
-                                    });
-                                } else {
-                                    res.json(savedSubscription);
-                                    return t.commit();
-                                }
-                            }).catch(error => {
-                                res.status(500).json({
-                                    message: 'Unknown error has occured'
-                                });
-                                return t.rollback();
-                            });
+                    Subscription.scope('priviledge').findOne({
+                        where: {
+                          status: SubscriptionStatuses.getApprovedStatus(),
+                          expiredAt: { $gt: new Date() },
+                          userId: subscription.userId,
+                          },
+                            order: [
+                             ['priviledge', 'DESC']
+                        ]
+                    }).then((sub: any) => {
+                        let lastExpirationDate: Date;
+                        if (sub != null) {
+                            lastExpirationDate = sub.expiredAt;
                         } else {
+                            lastExpirationDate = new Date();
+                        }
+                        subscription.status = status;
+                        subscription.respondedAt = new Date();
+                        let expiredAt = Priviledges.getExpiredTime(subscription.priviledge, lastExpirationDate);
+                        subscription.expiredAt = expiredAt;
+                        return subscription.save({ transaction: t }).then(savedSubscription => {
                             res.json(savedSubscription);
                             return t.commit();
-                        }
-                    }).catch(error => {
-                        res.status(400).json({
-                            message: 'Failed to save subscription'
+                        }).catch(error => {
+                            res.status(400).json({
+                                message: 'Failed to save subscription'
+                            });
+                            return t.rollback();
+                        });
+
+
+                    }, error => {
+                        res.status(500).json({
+                            message: 'Unknown error has occured'
                         });
                         return t.rollback();
                     });
+
+                    
                 }
             }).catch(error => {
                 res.status(500).json({

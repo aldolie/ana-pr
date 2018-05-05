@@ -9,7 +9,6 @@ import {__sequelize} from "../../index";
 
 export let controller = {
     post: (req: Request, res: Response, next: NextFunction) => {
-        let priviledge = 0;
         let role = Roles.getUserRole();
         let {email, password} = req.body;
         User.findOne({
@@ -23,7 +22,6 @@ export let controller = {
                     return User.create({
                         email: email,
                         password: Md5.hashStr(password),
-                        priviledge: priviledge,
                         role: role,
                         active: false,
                         activationToken: activationToken,
