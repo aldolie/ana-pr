@@ -12,7 +12,9 @@ import {User} from "./User";
     attributes: [ 'id', 'userId', 'priviledge', 'expiredAt']
   }
 })
-@Table
+@Table({
+  tableName: 'subscription'
+})
 export class Subscription extends Model<Subscription> {
 
     @PrimaryKey
